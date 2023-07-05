@@ -14,7 +14,7 @@ import ScrollableChat from "./ScrollableChat";
 import UpdateGroupChatModal from "./Authentication/miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 import Lottie from "react-lottie";
-
+import animationData from "../typing.json";
 const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
