@@ -13,6 +13,8 @@ import ProfileModal from "./Authentication/miscellaneous/ProfileModal";
 import ScrollableChat from "./ScrollableChat";
 import UpdateGroupChatModal from "./Authentication/miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
+import Lottie from "react-lottie";
+
 const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -22,6 +24,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setsocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
   const toast = useToast();
   const { user, selectedChat, setSelectedChat } = ChatState();
 
@@ -208,7 +219,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             isRequired
             mt={3}>
 
-              {isTyping ? <div> Loading... </div> : <></>}
+              {isTyping ? (<div>
+                  <Lottie
+                    options={defaultOptions}
+                    width={70}
+                    style={{ marginBottom: 15, marginLeft: 0 }}
+                  />
+                </div>)
+          : (<></>)}
               
             <Input
               variant="filled"
