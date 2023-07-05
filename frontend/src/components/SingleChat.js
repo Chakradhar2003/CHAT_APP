@@ -8,15 +8,18 @@ import { getSender, getSenderFull } from "../config/ChatLogics";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import io from "socket.io-client"
 import ProfileModal from "./Authentication/miscellaneous/ProfileModal";
 import ScrollableChat from "./ScrollableChat";
 import UpdateGroupChatModal from "./Authentication/miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
+const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
+  const [socketConnected, setsocketConnected] = useState(false);
   const toast = useToast();
   const { user, selectedChat, setSelectedChat } = ChatState();
 
@@ -37,9 +40,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         `/api/message/${selectedChat._id}`,
         config
       );
-      console.log(data);
+
       setMessages(data);
       setLoading(false);
+      socket.emit('join chat', selectedChat._id);
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -72,6 +76,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
           config
         );
+        console.log(data);
+        socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
         toast({
@@ -85,12 +91,28 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     }
   };
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+
+    socket.on("connection", () => setsocketConnected(true));
+  }, []);
   useEffect(() => {
     fetchMessages();
 
     selectedChatCompare = selectedChat;
 
   }, [selectedChat]);
+  useEffect(() => {
+    socket.on("message recieved", (newMessageRecieved) => {
+      if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id) {
+        //give notification
+      } else {
+        setMessages([...messages, newMessageRecieved]);
+      }
+    });
+  })
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
@@ -144,7 +166,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           w="100%"
           h="90%"
           borderRadius="lg"
-          overflowY="hidden" className='flex'
+          overflow="hidden" className='flex'
         >
           {loading ? (
             <Spinner
