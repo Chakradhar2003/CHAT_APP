@@ -14,7 +14,7 @@ import ScrollableChat from "./ScrollableChat";
 import UpdateGroupChatModal from "./Authentication/miscellaneous/UpdateGroupChatModal";
 import typingif from '../animations/typing.gif'
 import { ChatState } from "../Context/ChatProvider";
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "http://localhost:5000"; // $$ MODIFY THIS from video duration 8:18
 var socket, selectedChatCompare;
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
