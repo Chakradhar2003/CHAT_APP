@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Spinner, Tooltip, useDisclosure, useToast } from '@chakra-ui/react';
+import { Avatar, Badge, Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Spinner, Tooltip, useDisclosure, useToast } from '@chakra-ui/react';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React, { useState } from 'react'
@@ -9,12 +9,15 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ChatLoading from '../../ChatLoading';
 import UserListItem from '../../UserAvatar/UserListItem';
+import { getSender } from '../../../config/ChatLogics'
+
+
 const SideDrawer = () => {
     const [search, setSearch] = useState("");
     const [searchResult, setSearchResult] = useState([]);
     const [loading, setLoading] = useState(false);
     const [loadingChat, setLoadingChat] = useState(false);
-    const { user, setSelectedChat, chats, setChats } = ChatState();
+    const { user, setSelectedChat, chats, setChats, notification, setNotification } = ChatState();
     const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const logoutHandler = () => {
@@ -94,9 +97,25 @@ const SideDrawer = () => {
             </div>
             <h1>Chat & Fun!</h1>
             <div><Menu>
-                <MenuButton p={1}>
-                    <NotificationsActiveIcon />
+                <MenuButton p={1} className='relative'>
+
+                    <NotificationsActiveIcon className='mr-2' />
+                    <Badge colorScheme='red' className='absolute right-[5px]'>{notification.length ? notification.length : (<></>)}</Badge>
+
                 </MenuButton>
+                <MenuList pl={2}>
+                    {!notification.length && "No New Messages"}
+                    {notification.map((notif) => (
+                        <MenuItem key={notif._id} onClick={() => {
+                            setSelectedChat(notif.chat);
+                            setNotification(notification.filter((n) => n !== notif));
+                        }} >
+                            {notif.chat.isGroupChat
+                                ? `New Message in ${notif.chat.chatName}`
+                                : `New Message from ${getSender(user, notif.chat.users)}`}
+                        </MenuItem>
+                    ))}
+                </MenuList>
             </Menu>
                 <Menu>
                     <MenuButton as={Button} rightIcon={<ExpandMoreIcon />}>
