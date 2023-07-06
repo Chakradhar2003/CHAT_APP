@@ -58,7 +58,7 @@ app.use(notFound)
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
-const server = app.listen(5000, console.log(`Server Started on PORT ${PORT}`.yellow.bold));
+const server = app.listen(PORT, console.log(`Server Started on PORT ${PORT}`.yellow.bold));
 const io = require("socket.io")(server, {
     pingTimeout: 60000,//if noone messages
     cors: {
