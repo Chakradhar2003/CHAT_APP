@@ -80,7 +80,7 @@ const MyChats = ({ fetchAgain }) => {
             >
                 {chats ? (
                     <Stack overflowY="">
-                        {chats.map((chat) => (
+                        {chats && chats.map((chat) => (
                             <Box
                                 onClick={() => setSelectedChat(chat)}
                                 cursor="pointer"
