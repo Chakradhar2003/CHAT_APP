@@ -1,8 +1,3 @@
-![image](https://github.com/Chakradhar2003/CHAT_APP/assets/95245987/cfcc7e49-e0cf-48af-a498-63bf66db218c)
-Sure! Below is the README file for your real-time chat app:
-
-sql
-Copy code
 # Real-Time Chat App
 
 This project is a real-time chat application that allows users to register, create groups, and have private and group conversations.
