@@ -31,6 +31,11 @@ The backend is developed using Node.js, Express.js, MongoDB, and Socket.io for r
 # USER PROFILE
 ![pf](https://github.com/Chakradhar2003/CHAT_APP/assets/95245987/b48e6eef-f26f-4d25-a3d3-3d477cf4d347)
 
+# LIVE RUN
+
+https://github.com/Chakradhar2003/CHAT_APP/assets/95245987/fff5060d-cd2d-4fc1-b12b-45e7e9258890
+
+
 
 
 
