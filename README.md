@@ -33,7 +33,11 @@ The backend is developed using Node.js, Express.js, MongoDB, and Socket.io for r
 
 # LIVE RUN
 
-https://github.com/Chakradhar2003/CHAT_APP/assets/95245987/fff5060d-cd2d-4fc1-b12b-45e7e9258890
+https://github.com/Chakradhar2003/CHAT_APP/assets/95245987/4e3cc44b-b7f1-4c62-be80-e81675079533
+
+
+
+
 
 
 
